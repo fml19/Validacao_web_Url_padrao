@@ -20,7 +20,7 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL
 
-  config.before (:example)do
+  config.before (:example)do #maximizar a tela
     page.current_window.resize_to(1280, 800)
    end
 
