@@ -20,14 +20,21 @@ RSpec.configure do |config|
 
   config.include Capybara::DSL
 
-  config.before (:example)do #maximizar a tela
+  config.before (:example)do
     page.current_window.resize_to(1280, 800)
-   end
+  end
+
+  config.after(:example) do |e| #
+    nome = e.description.gsub(/[^A-Za-z0-9 ]/, '').tr('','_') # corrigir caracteres especiais
+    page.save_screenshot('log/' + nome + '.png') #salvar print das paginas todas paginas ok
+    # page.save_screenshot('log/' + nome + '.png') if e.exception #print da pagina com erro
+  end
 
 end
 
 Capybara.configure do |config|
   config.default_driver = :selenium_chrome # abrir o chomer
+  # config.default_driver = :selenium_chrome_headless # abrir em headles não abre navegador
   config.default_max_wait_time = 90 # tempo máximo de espera
   config.app_host = 'http://training-wheels-protocol.herokuapp.com' #url padrão
 
